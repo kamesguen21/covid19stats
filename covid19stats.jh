@@ -1,0 +1,44 @@
+entity Country {
+	Country String,
+    Slug String,
+    ISO2 String
+}
+entity DailyCases{
+        Country String,
+        CountryCode String,
+        Province String,
+        City String,
+        CityCode String,
+        Lat Long,
+        Lon Long,
+        Cases Integer,
+        Status Status,
+        Date Instant
+}
+enum Status {
+        CONFIRMED, RECOVERED, DEATHS
+}
+entity CdcNews{
+title String,
+description String,
+pubDate String,
+lastBuildDate String,
+link String,
+}
+entity Item{
+title String,
+description String,
+link String,
+pubDate String,
+media String
+}
+entity Category{
+name String
+}
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	CdcNews{items} to Item,
+    Item{categories} to Category,
+}
+service all with serviceImpl
+

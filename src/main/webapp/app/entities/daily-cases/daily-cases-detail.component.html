@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="dailyCases">
+            <h2><span>Daily Cases</span> {{ dailyCases.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Country</span></dt>
+                <dd>
+                    <span>{{ dailyCases.country }}</span>
+                </dd>
+                <dt><span>Country Code</span></dt>
+                <dd>
+                    <span>{{ dailyCases.countryCode }}</span>
+                </dd>
+                <dt><span>Province</span></dt>
+                <dd>
+                    <span>{{ dailyCases.province }}</span>
+                </dd>
+                <dt><span>City</span></dt>
+                <dd>
+                    <span>{{ dailyCases.city }}</span>
+                </dd>
+                <dt><span>City Code</span></dt>
+                <dd>
+                    <span>{{ dailyCases.cityCode }}</span>
+                </dd>
+                <dt><span>Lat</span></dt>
+                <dd>
+                    <span>{{ dailyCases.lat }}</span>
+                </dd>
+                <dt><span>Lon</span></dt>
+                <dd>
+                    <span>{{ dailyCases.lon }}</span>
+                </dd>
+                <dt><span>Cases</span></dt>
+                <dd>
+                    <span>{{ dailyCases.cases }}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{ dailyCases.status }}</span>
+                </dd>
+                <dt><span>Date</span></dt>
+                <dd>
+                    <span>{{ dailyCases.date }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/daily-cases', dailyCases.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="cdcNews">
+            <h2><span>Cdc News</span> {{ cdcNews.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Title</span></dt>
+                <dd>
+                    <span>{{ cdcNews.title }}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{ cdcNews.description }}</span>
+                </dd>
+                <dt><span>Pub Date</span></dt>
+                <dd>
+                    <span>{{ cdcNews.pubDate }}</span>
+                </dd>
+                <dt><span>Last Build Date</span></dt>
+                <dd>
+                    <span>{{ cdcNews.lastBuildDate }}</span>
+                </dd>
+                <dt><span>Link</span></dt>
+                <dd>
+                    <span>{{ cdcNews.link }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cdc-news', cdcNews.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

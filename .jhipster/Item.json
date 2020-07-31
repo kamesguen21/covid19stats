@@ -1,0 +1,51 @@
+{
+  "name": "Item",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pubDate",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "media",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "item",
+      "relationshipName": "categories"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cdcNews",
+      "otherEntityRelationshipName": "items",
+      "relationshipName": "cdcNews",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200730222840",
+  "entityTableName": "item",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
