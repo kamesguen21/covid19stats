@@ -1,21 +1,28 @@
 package com.guen.covid19stats.config.dbmigrations;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guen.covid19stats.domain.Authority;
+import com.guen.covid19stats.domain.Country;
+import com.guen.covid19stats.domain.GlobalConfigurations;
 import com.guen.covid19stats.domain.User;
 import com.guen.covid19stats.security.AuthoritiesConstants;
-
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.time.Instant;
+
+import static com.guen.covid19stats.service.apiClient.ApiClientInterface.*;
 
 /**
  * Creates the initial database setup.
  */
-@ChangeLog(order = "001")
+@ChangeLog(order = "005")
 public class InitialSetupMigration {
-
     @ChangeSet(order = "01", author = "initiator", id = "01-addAuthorities")
     public void addAuthorities(MongoTemplate mongoTemplate) {
         Authority adminAuthority = new Authority();
@@ -89,5 +96,46 @@ public class InitialSetupMigration {
         userUser.setCreatedDate(Instant.now());
         userUser.getAuthorities().add(userAuthority);
         mongoTemplate.save(userUser);
+    }
+
+    @ChangeSet(order = "03", author = "kames", id = "03-addConfig")
+    public void addConfig(MongoTemplate mongoTemplate) {
+        GlobalConfigurations globalConfigurations = new GlobalConfigurations();
+        globalConfigurations.setCode(COVID_API_CODE);
+        globalConfigurations.setDiscription("COVID19 daily cases api");
+        globalConfigurations.setHost("https://api.covid19api.com");
+        globalConfigurations.setName("Coronavirus COVID19 API");
+        globalConfigurations.setId(COVID_API_CODE);
+        mongoTemplate.save(globalConfigurations);
+        globalConfigurations = new GlobalConfigurations();
+        globalConfigurations.setCode(WHO_NEWS_API_CODE);
+        globalConfigurations.setDiscription("WHO Disease Outbreak News");
+        globalConfigurations.setHost("https://www.who.int/feeds/entity/csr/don/en/rss.xml");
+        globalConfigurations.setName("WHO Disease Outbreak News");
+        globalConfigurations.setId(WHO_NEWS_API_CODE);
+        mongoTemplate.save(globalConfigurations);
+        globalConfigurations = new GlobalConfigurations();
+        globalConfigurations.setCode(CDC_NEWS_API_CODE);
+        globalConfigurations.setDiscription("The Centers for Disease Control and Prevention (CDC) is closely monitoring an outbreak of respiratory illness caused by a novel (new) coronavirus first identified in Wuhan, Hubei Province, China.");
+        globalConfigurations.setHost("https://tools.cdc.gov/api/v2/resources/media/403372.rss");
+        globalConfigurations.setName("2019 Novel Coronavirus");
+        globalConfigurations.setId(CDC_NEWS_API_CODE);
+        mongoTemplate.save(globalConfigurations);
+
+    }
+
+    @ChangeSet(order = "09", author = "kames", id = "09-addCountries")
+    public void addCountries(MongoTemplate mongoTemplate) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Reader reader = new FileReader(new ClassPathResource("config/data/countries.json").getFile());
+            Country[] countries = objectMapper.readValue(reader, Country[].class);
+            for (Country country : countries) {
+                country.setId(country.getiSO2());
+                mongoTemplate.save(country);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

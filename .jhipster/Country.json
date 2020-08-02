@@ -14,7 +14,14 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dailyCases",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "dailyCases"
+    }
+  ],
   "changelogDate": "20200730222540",
   "entityTableName": "country",
   "dto": "no",

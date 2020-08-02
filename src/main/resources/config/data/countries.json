@@ -1,0 +1,27 @@
+[
+  {
+    "country": "United States of America",
+    "slug": "united-states",
+    "iSO2": "US"
+  },
+  {
+    "country": "Tunisia",
+    "slug": "tunisia",
+    "iSO2": "TN"
+  },
+  {
+    "country": "China",
+    "slug": "china",
+    "iSO2": "CN"
+  },
+  {
+    "country": "France",
+    "slug": "france",
+    "iSO2": "FR"
+  },
+  {
+    "country": "United Kingdom",
+    "slug": "united-kingdom",
+    "iSO2": "GB"
+  }
+]

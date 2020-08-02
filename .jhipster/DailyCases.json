@@ -2,48 +2,43 @@
   "name": "DailyCases",
   "fields": [
     {
-      "fieldName": "country",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "countryCode",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "province",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "city",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "cityCode",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "lat",
-      "fieldType": "Long"
+      "fieldType": "Double"
     },
     {
       "fieldName": "lon",
-      "fieldType": "Long"
+      "fieldType": "Double"
     },
     {
-      "fieldName": "cases",
+      "fieldName": "confirmed",
       "fieldType": "Integer"
     },
     {
-      "fieldName": "status",
-      "fieldType": "Status",
-      "fieldValues": "CONFIRMED,RECOVERED,DEATHS"
+      "fieldName": "active",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "deaths",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "recovered",
+      "fieldType": "Integer"
     },
     {
       "fieldName": "date",
       "fieldType": "Instant"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "dailyCases",
+      "relationshipName": "country",
+      "otherEntityField": "id"
+    }
+  ],
   "changelogDate": "20200730222640",
   "entityTableName": "daily_cases",
   "dto": "no",

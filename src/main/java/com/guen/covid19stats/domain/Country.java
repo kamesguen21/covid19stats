@@ -3,9 +3,12 @@ package com.guen.covid19stats.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Country.
@@ -27,6 +30,10 @@ public class Country implements Serializable {
 
     @Field("i_so_2")
     private String iSO2;
+
+    @DBRef
+    @Field("dailyCases")
+    private Set<DailyCases> dailyCases = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
@@ -74,6 +81,31 @@ public class Country implements Serializable {
 
     public void setiSO2(String iSO2) {
         this.iSO2 = iSO2;
+    }
+
+    public Set<DailyCases> getDailyCases() {
+        return dailyCases;
+    }
+
+    public Country dailyCases(Set<DailyCases> dailyCases) {
+        this.dailyCases = dailyCases;
+        return this;
+    }
+
+    public Country addDailyCases(DailyCases dailyCases) {
+        this.dailyCases.add(dailyCases);
+        dailyCases.setCountry(this);
+        return this;
+    }
+
+    public Country removeDailyCases(DailyCases dailyCases) {
+        this.dailyCases.remove(dailyCases);
+        dailyCases.setCountry(null);
+        return this;
+    }
+
+    public void setDailyCases(Set<DailyCases> dailyCases) {
+        this.dailyCases = dailyCases;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

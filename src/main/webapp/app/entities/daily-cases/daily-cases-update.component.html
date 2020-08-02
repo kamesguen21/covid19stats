@@ -12,36 +12,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_country">Country</label>
-                    <input type="text" class="form-control" name="country" id="field_country"
-                           formControlName="country"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_countryCode">Country Code</label>
-                    <input type="text" class="form-control" name="countryCode" id="field_countryCode"
-                           formControlName="countryCode"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_province">Province</label>
-                    <input type="text" class="form-control" name="province" id="field_province"
-                           formControlName="province"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_city">City</label>
-                    <input type="text" class="form-control" name="city" id="field_city"
-                           formControlName="city"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_cityCode">City Code</label>
-                    <input type="text" class="form-control" name="cityCode" id="field_cityCode"
-                           formControlName="cityCode"/>
-                </div>
-
-                <div class="form-group">
                     <label class="form-control-label" for="field_lat">Lat</label>
                     <input type="number" class="form-control" name="lat" id="field_lat"
                            formControlName="lat"/>
@@ -54,18 +24,27 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_cases">Cases</label>
-                    <input type="number" class="form-control" name="cases" id="field_cases"
-                           formControlName="cases"/>
+                    <label class="form-control-label" for="field_confirmed">Confirmed</label>
+                    <input type="number" class="form-control" name="confirmed" id="field_confirmed"
+                           formControlName="confirmed"/>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="CONFIRMED">CONFIRMED</option>
-                        <option value="RECOVERED">RECOVERED</option>
-                        <option value="DEATHS">DEATHS</option>
-                    </select>
+                    <label class="form-control-label" for="field_active">Active</label>
+                    <input type="number" class="form-control" name="active" id="field_active"
+                           formControlName="active"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_deaths">Deaths</label>
+                    <input type="number" class="form-control" name="deaths" id="field_deaths"
+                           formControlName="deaths"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_recovered">Recovered</label>
+                    <input type="number" class="form-control" name="recovered" id="field_recovered"
+                           formControlName="recovered"/>
                 </div>
 
                 <div class="form-group">
@@ -73,6 +52,14 @@
                     <div class="d-flex">
                         <input id="field_date" type="datetime-local" class="form-control" name="date" formControlName="date" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_country">Country</label>
+                    <select class="form-control" id="field_country" name="country" formControlName="country">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="countryOption.id === editForm.get('country')!.value?.id ? editForm.get('country')!.value : countryOption" *ngFor="let countryOption of countries; trackBy: trackById">{{ countryOption.id }}</option>
+                    </select>
                 </div>
             </div>
 

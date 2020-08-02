@@ -30,7 +30,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.guen.covid19stats.domain.enumeration.Status;
 /**
  * Integration tests for the {@link DailyCasesResource} REST controller.
  */
@@ -40,32 +39,23 @@ import com.guen.covid19stats.domain.enumeration.Status;
 @WithMockUser
 public class DailyCasesResourceIT {
 
-    private static final String DEFAULT_COUNTRY = "AAAAAAAAAA";
-    private static final String UPDATED_COUNTRY = "BBBBBBBBBB";
+    private static final Double DEFAULT_LAT = 1D;
+    private static final Double UPDATED_LAT = 2D;
 
-    private static final String DEFAULT_COUNTRY_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_COUNTRY_CODE = "BBBBBBBBBB";
+    private static final Double DEFAULT_LON = 1D;
+    private static final Double UPDATED_LON = 2D;
 
-    private static final String DEFAULT_PROVINCE = "AAAAAAAAAA";
-    private static final String UPDATED_PROVINCE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_CONFIRMED = 1;
+    private static final Integer UPDATED_CONFIRMED = 2;
 
-    private static final String DEFAULT_CITY = "AAAAAAAAAA";
-    private static final String UPDATED_CITY = "BBBBBBBBBB";
+    private static final Integer DEFAULT_ACTIVE = 1;
+    private static final Integer UPDATED_ACTIVE = 2;
 
-    private static final String DEFAULT_CITY_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CITY_CODE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_DEATHS = 1;
+    private static final Integer UPDATED_DEATHS = 2;
 
-    private static final Long DEFAULT_LAT = 1L;
-    private static final Long UPDATED_LAT = 2L;
-
-    private static final Long DEFAULT_LON = 1L;
-    private static final Long UPDATED_LON = 2L;
-
-    private static final Integer DEFAULT_CASES = 1;
-    private static final Integer UPDATED_CASES = 2;
-
-    private static final Status DEFAULT_STATUS = Status.CONFIRMED;
-    private static final Status UPDATED_STATUS = Status.RECOVERED;
+    private static final Integer DEFAULT_RECOVERED = 1;
+    private static final Integer UPDATED_RECOVERED = 2;
 
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -97,15 +87,12 @@ public class DailyCasesResourceIT {
      */
     public static DailyCases createEntity() {
         DailyCases dailyCases = new DailyCases()
-            .country(DEFAULT_COUNTRY)
-            .countryCode(DEFAULT_COUNTRY_CODE)
-            .province(DEFAULT_PROVINCE)
-            .city(DEFAULT_CITY)
-            .cityCode(DEFAULT_CITY_CODE)
             .lat(DEFAULT_LAT)
             .lon(DEFAULT_LON)
-            .cases(DEFAULT_CASES)
-            .status(DEFAULT_STATUS)
+            .confirmed(DEFAULT_CONFIRMED)
+            .active(DEFAULT_ACTIVE)
+            .deaths(DEFAULT_DEATHS)
+            .recovered(DEFAULT_RECOVERED)
             .date(DEFAULT_DATE);
         return dailyCases;
     }
@@ -117,15 +104,12 @@ public class DailyCasesResourceIT {
      */
     public static DailyCases createUpdatedEntity() {
         DailyCases dailyCases = new DailyCases()
-            .country(UPDATED_COUNTRY)
-            .countryCode(UPDATED_COUNTRY_CODE)
-            .province(UPDATED_PROVINCE)
-            .city(UPDATED_CITY)
-            .cityCode(UPDATED_CITY_CODE)
             .lat(UPDATED_LAT)
             .lon(UPDATED_LON)
-            .cases(UPDATED_CASES)
-            .status(UPDATED_STATUS)
+            .confirmed(UPDATED_CONFIRMED)
+            .active(UPDATED_ACTIVE)
+            .deaths(UPDATED_DEATHS)
+            .recovered(UPDATED_RECOVERED)
             .date(UPDATED_DATE);
         return dailyCases;
     }
@@ -149,15 +133,12 @@ public class DailyCasesResourceIT {
         List<DailyCases> dailyCasesList = dailyCasesRepository.findAll();
         assertThat(dailyCasesList).hasSize(databaseSizeBeforeCreate + 1);
         DailyCases testDailyCases = dailyCasesList.get(dailyCasesList.size() - 1);
-        assertThat(testDailyCases.getCountry()).isEqualTo(DEFAULT_COUNTRY);
-        assertThat(testDailyCases.getCountryCode()).isEqualTo(DEFAULT_COUNTRY_CODE);
-        assertThat(testDailyCases.getProvince()).isEqualTo(DEFAULT_PROVINCE);
-        assertThat(testDailyCases.getCity()).isEqualTo(DEFAULT_CITY);
-        assertThat(testDailyCases.getCityCode()).isEqualTo(DEFAULT_CITY_CODE);
         assertThat(testDailyCases.getLat()).isEqualTo(DEFAULT_LAT);
         assertThat(testDailyCases.getLon()).isEqualTo(DEFAULT_LON);
-        assertThat(testDailyCases.getCases()).isEqualTo(DEFAULT_CASES);
-        assertThat(testDailyCases.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testDailyCases.getConfirmed()).isEqualTo(DEFAULT_CONFIRMED);
+        assertThat(testDailyCases.getActive()).isEqualTo(DEFAULT_ACTIVE);
+        assertThat(testDailyCases.getDeaths()).isEqualTo(DEFAULT_DEATHS);
+        assertThat(testDailyCases.getRecovered()).isEqualTo(DEFAULT_RECOVERED);
         assertThat(testDailyCases.getDate()).isEqualTo(DEFAULT_DATE);
 
         // Validate the DailyCases in Elasticsearch
@@ -196,15 +177,12 @@ public class DailyCasesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(dailyCases.getId())))
-            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
-            .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE)))
-            .andExpect(jsonPath("$.[*].province").value(hasItem(DEFAULT_PROVINCE)))
-            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
-            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE)))
-            .andExpect(jsonPath("$.[*].lat").value(hasItem(DEFAULT_LAT.intValue())))
-            .andExpect(jsonPath("$.[*].lon").value(hasItem(DEFAULT_LON.intValue())))
-            .andExpect(jsonPath("$.[*].cases").value(hasItem(DEFAULT_CASES)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].lat").value(hasItem(DEFAULT_LAT.doubleValue())))
+            .andExpect(jsonPath("$.[*].lon").value(hasItem(DEFAULT_LON.doubleValue())))
+            .andExpect(jsonPath("$.[*].confirmed").value(hasItem(DEFAULT_CONFIRMED)))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE)))
+            .andExpect(jsonPath("$.[*].deaths").value(hasItem(DEFAULT_DEATHS)))
+            .andExpect(jsonPath("$.[*].recovered").value(hasItem(DEFAULT_RECOVERED)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
     }
     
@@ -218,15 +196,12 @@ public class DailyCasesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(dailyCases.getId()))
-            .andExpect(jsonPath("$.country").value(DEFAULT_COUNTRY))
-            .andExpect(jsonPath("$.countryCode").value(DEFAULT_COUNTRY_CODE))
-            .andExpect(jsonPath("$.province").value(DEFAULT_PROVINCE))
-            .andExpect(jsonPath("$.city").value(DEFAULT_CITY))
-            .andExpect(jsonPath("$.cityCode").value(DEFAULT_CITY_CODE))
-            .andExpect(jsonPath("$.lat").value(DEFAULT_LAT.intValue()))
-            .andExpect(jsonPath("$.lon").value(DEFAULT_LON.intValue()))
-            .andExpect(jsonPath("$.cases").value(DEFAULT_CASES))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.lat").value(DEFAULT_LAT.doubleValue()))
+            .andExpect(jsonPath("$.lon").value(DEFAULT_LON.doubleValue()))
+            .andExpect(jsonPath("$.confirmed").value(DEFAULT_CONFIRMED))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE))
+            .andExpect(jsonPath("$.deaths").value(DEFAULT_DEATHS))
+            .andExpect(jsonPath("$.recovered").value(DEFAULT_RECOVERED))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
     }
     @Test
@@ -246,15 +221,12 @@ public class DailyCasesResourceIT {
         // Update the dailyCases
         DailyCases updatedDailyCases = dailyCasesRepository.findById(dailyCases.getId()).get();
         updatedDailyCases
-            .country(UPDATED_COUNTRY)
-            .countryCode(UPDATED_COUNTRY_CODE)
-            .province(UPDATED_PROVINCE)
-            .city(UPDATED_CITY)
-            .cityCode(UPDATED_CITY_CODE)
             .lat(UPDATED_LAT)
             .lon(UPDATED_LON)
-            .cases(UPDATED_CASES)
-            .status(UPDATED_STATUS)
+            .confirmed(UPDATED_CONFIRMED)
+            .active(UPDATED_ACTIVE)
+            .deaths(UPDATED_DEATHS)
+            .recovered(UPDATED_RECOVERED)
             .date(UPDATED_DATE);
 
         restDailyCasesMockMvc.perform(put("/api/daily-cases")
@@ -266,15 +238,12 @@ public class DailyCasesResourceIT {
         List<DailyCases> dailyCasesList = dailyCasesRepository.findAll();
         assertThat(dailyCasesList).hasSize(databaseSizeBeforeUpdate);
         DailyCases testDailyCases = dailyCasesList.get(dailyCasesList.size() - 1);
-        assertThat(testDailyCases.getCountry()).isEqualTo(UPDATED_COUNTRY);
-        assertThat(testDailyCases.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
-        assertThat(testDailyCases.getProvince()).isEqualTo(UPDATED_PROVINCE);
-        assertThat(testDailyCases.getCity()).isEqualTo(UPDATED_CITY);
-        assertThat(testDailyCases.getCityCode()).isEqualTo(UPDATED_CITY_CODE);
         assertThat(testDailyCases.getLat()).isEqualTo(UPDATED_LAT);
         assertThat(testDailyCases.getLon()).isEqualTo(UPDATED_LON);
-        assertThat(testDailyCases.getCases()).isEqualTo(UPDATED_CASES);
-        assertThat(testDailyCases.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testDailyCases.getConfirmed()).isEqualTo(UPDATED_CONFIRMED);
+        assertThat(testDailyCases.getActive()).isEqualTo(UPDATED_ACTIVE);
+        assertThat(testDailyCases.getDeaths()).isEqualTo(UPDATED_DEATHS);
+        assertThat(testDailyCases.getRecovered()).isEqualTo(UPDATED_RECOVERED);
         assertThat(testDailyCases.getDate()).isEqualTo(UPDATED_DATE);
 
         // Validate the DailyCases in Elasticsearch
@@ -332,15 +301,12 @@ public class DailyCasesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(dailyCases.getId())))
-            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
-            .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE)))
-            .andExpect(jsonPath("$.[*].province").value(hasItem(DEFAULT_PROVINCE)))
-            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
-            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE)))
-            .andExpect(jsonPath("$.[*].lat").value(hasItem(DEFAULT_LAT.intValue())))
-            .andExpect(jsonPath("$.[*].lon").value(hasItem(DEFAULT_LON.intValue())))
-            .andExpect(jsonPath("$.[*].cases").value(hasItem(DEFAULT_CASES)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].lat").value(hasItem(DEFAULT_LAT.doubleValue())))
+            .andExpect(jsonPath("$.[*].lon").value(hasItem(DEFAULT_LON.doubleValue())))
+            .andExpect(jsonPath("$.[*].confirmed").value(hasItem(DEFAULT_CONFIRMED)))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE)))
+            .andExpect(jsonPath("$.[*].deaths").value(hasItem(DEFAULT_DEATHS)))
+            .andExpect(jsonPath("$.[*].recovered").value(hasItem(DEFAULT_RECOVERED)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
     }
 }

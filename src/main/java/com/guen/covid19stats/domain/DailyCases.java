@@ -1,14 +1,14 @@
 package com.guen.covid19stats.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
-
-import com.guen.covid19stats.domain.enumeration.Status;
 
 /**
  * A DailyCases.
@@ -22,35 +22,31 @@ public class DailyCases implements Serializable {
     @Id
     private String id;
 
-    @Field("country")
-    private String country;
-
-    @Field("country_code")
-    private String countryCode;
-
-    @Field("province")
-    private String province;
-
-    @Field("city")
-    private String city;
-
-    @Field("city_code")
-    private String cityCode;
-
     @Field("lat")
-    private Long lat;
+    private Double lat;
 
     @Field("lon")
-    private Long lon;
+    private Double lon;
 
-    @Field("cases")
-    private Integer cases;
+    @Field("confirmed")
+    private Integer confirmed;
 
-    @Field("status")
-    private Status status;
+    @Field("active")
+    private Integer active;
+
+    @Field("deaths")
+    private Integer deaths;
+
+    @Field("recovered")
+    private Integer recovered;
 
     @Field("date")
     private Instant date;
+
+    @DBRef
+    @Field("country")
+    @JsonIgnoreProperties(value = "dailyCases", allowSetters = true)
+    private Country country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
@@ -61,121 +57,82 @@ public class DailyCases implements Serializable {
         this.id = id;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public DailyCases country(String country) {
-        this.country = country;
-        return this;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public DailyCases countryCode(String countryCode) {
-        this.countryCode = countryCode;
-        return this;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public DailyCases province(String province) {
-        this.province = province;
-        return this;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public DailyCases city(String city) {
-        this.city = city;
-        return this;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCityCode() {
-        return cityCode;
-    }
-
-    public DailyCases cityCode(String cityCode) {
-        this.cityCode = cityCode;
-        return this;
-    }
-
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
-    }
-
-    public Long getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public DailyCases lat(Long lat) {
+    public DailyCases lat(Double lat) {
         this.lat = lat;
         return this;
     }
 
-    public void setLat(Long lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Long getLon() {
+    public Double getLon() {
         return lon;
     }
 
-    public DailyCases lon(Long lon) {
+    public DailyCases lon(Double lon) {
         this.lon = lon;
         return this;
     }
 
-    public void setLon(Long lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 
-    public Integer getCases() {
-        return cases;
+    public Integer getConfirmed() {
+        return confirmed;
     }
 
-    public DailyCases cases(Integer cases) {
-        this.cases = cases;
+    public DailyCases confirmed(Integer confirmed) {
+        this.confirmed = confirmed;
         return this;
     }
 
-    public void setCases(Integer cases) {
-        this.cases = cases;
+    public void setConfirmed(Integer confirmed) {
+        this.confirmed = confirmed;
     }
 
-    public Status getStatus() {
-        return status;
+    public Integer getActive() {
+        return active;
     }
 
-    public DailyCases status(Status status) {
-        this.status = status;
+    public DailyCases active(Integer active) {
+        this.active = active;
         return this;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
+    public Integer getDeaths() {
+        return deaths;
+    }
+
+    public DailyCases deaths(Integer deaths) {
+        this.deaths = deaths;
+        return this;
+    }
+
+    public void setDeaths(Integer deaths) {
+        this.deaths = deaths;
+    }
+
+    public Integer getRecovered() {
+        return recovered;
+    }
+
+    public DailyCases recovered(Integer recovered) {
+        this.recovered = recovered;
+        return this;
+    }
+
+    public void setRecovered(Integer recovered) {
+        this.recovered = recovered;
     }
 
     public Instant getDate() {
@@ -189,6 +146,19 @@ public class DailyCases implements Serializable {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public DailyCases country(Country country) {
+        this.country = country;
+        return this;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -213,15 +183,12 @@ public class DailyCases implements Serializable {
     public String toString() {
         return "DailyCases{" +
             "id=" + getId() +
-            ", country='" + getCountry() + "'" +
-            ", countryCode='" + getCountryCode() + "'" +
-            ", province='" + getProvince() + "'" +
-            ", city='" + getCity() + "'" +
-            ", cityCode='" + getCityCode() + "'" +
             ", lat=" + getLat() +
             ", lon=" + getLon() +
-            ", cases=" + getCases() +
-            ", status='" + getStatus() + "'" +
+            ", confirmed=" + getConfirmed() +
+            ", active=" + getActive() +
+            ", deaths=" + getDeaths() +
+            ", recovered=" + getRecovered() +
             ", date='" + getDate() + "'" +
             "}";
     }

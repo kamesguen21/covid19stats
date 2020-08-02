@@ -8,26 +8,6 @@
             <jhi-alert-error></jhi-alert-error>
 
             <dl class="row-md jh-entity-details">
-                <dt><span>Country</span></dt>
-                <dd>
-                    <span>{{ dailyCases.country }}</span>
-                </dd>
-                <dt><span>Country Code</span></dt>
-                <dd>
-                    <span>{{ dailyCases.countryCode }}</span>
-                </dd>
-                <dt><span>Province</span></dt>
-                <dd>
-                    <span>{{ dailyCases.province }}</span>
-                </dd>
-                <dt><span>City</span></dt>
-                <dd>
-                    <span>{{ dailyCases.city }}</span>
-                </dd>
-                <dt><span>City Code</span></dt>
-                <dd>
-                    <span>{{ dailyCases.cityCode }}</span>
-                </dd>
                 <dt><span>Lat</span></dt>
                 <dd>
                     <span>{{ dailyCases.lat }}</span>
@@ -36,17 +16,31 @@
                 <dd>
                     <span>{{ dailyCases.lon }}</span>
                 </dd>
-                <dt><span>Cases</span></dt>
+                <dt><span>Confirmed</span></dt>
                 <dd>
-                    <span>{{ dailyCases.cases }}</span>
+                    <span>{{ dailyCases.confirmed }}</span>
                 </dd>
-                <dt><span>Status</span></dt>
+                <dt><span>Active</span></dt>
                 <dd>
-                    <span>{{ dailyCases.status }}</span>
+                    <span>{{ dailyCases.active }}</span>
+                </dd>
+                <dt><span>Deaths</span></dt>
+                <dd>
+                    <span>{{ dailyCases.deaths }}</span>
+                </dd>
+                <dt><span>Recovered</span></dt>
+                <dd>
+                    <span>{{ dailyCases.recovered }}</span>
                 </dd>
                 <dt><span>Date</span></dt>
                 <dd>
                     <span>{{ dailyCases.date }}</span>
+                </dd>
+                <dt><span>Country</span></dt>
+                <dd>
+                    <div *ngIf="dailyCases.country">
+                        <a [routerLink]="['/country', dailyCases.country?.id, 'view']">{{ dailyCases.country?.id }}</a>
+                    </div>
                 </dd>
             </dl>
 

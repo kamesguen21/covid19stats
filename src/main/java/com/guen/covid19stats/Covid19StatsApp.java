@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
@@ -50,7 +52,10 @@ public class Covid19StatsApp {
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
     }
-
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
     /**
      * Main method, used to run the application.
      *

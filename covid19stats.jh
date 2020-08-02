@@ -1,22 +1,19 @@
 entity Country {
-	Country String,
-    Slug String,
-    ISO2 String
+	country String,
+    slug String,
+    iSO2 String
 }
 entity DailyCases{
-        Country String,
-        CountryCode String,
-        Province String,
-        City String,
-        CityCode String,
-        Lat Long,
-        Lon Long,
-        Cases Integer,
-        Status Status,
-        Date Instant
+        lat Double,
+        lon Double,
+        confirmed Integer,
+        active Integer,
+        deaths Integer,
+        recovered Integer,
+        date Instant
 }
 enum Status {
-        CONFIRMED, RECOVERED, DEATHS
+        CONFIRMED, RECOVERED, DEATHS, ACTIVE
 }
 entity CdcNews{
 title String,
@@ -32,6 +29,12 @@ link String,
 pubDate String,
 media String
 }
+entity GlobalConfigurations{
+name String,
+discription String,
+Host String,
+code String
+}
 entity Category{
 name String
 }
@@ -39,6 +42,9 @@ name String
 relationship OneToMany {
 	CdcNews{items} to Item,
     Item{categories} to Category,
+}
+relationship OneToMany {
+	Country{dailyCases} to DailyCases{country},
 }
 service all with serviceImpl
 

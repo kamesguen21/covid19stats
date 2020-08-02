@@ -1,11 +1,11 @@
 <div>
     <h2 id="page-heading">
-        <span>Daily Cases</span>
+        <span>Global Configurations</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-daily-cases" [routerLink]="['/daily-cases/new']">
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-global-configurations" [routerLink]="['/global-configurations/new']">
             <fa-icon icon="plus"></fa-icon>
             <span class="hidden-sm-down">
-            Create a new Daily Cases
+            Create a new Global Configurations
             </span>
         </button>
     </h2>
@@ -32,58 +32,46 @@
         </div>
     </div>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="dailyCases?.length === 0">
-        <span>No dailyCases found</span>
+    <div class="alert alert-warning" id="no-result" *ngIf="globalConfigurations?.length === 0">
+        <span>No globalConfigurations found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="dailyCases && dailyCases.length > 0">
+    <div class="table-responsive" id="entities" *ngIf="globalConfigurations && globalConfigurations.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr>
                     <th scope="col" ><span>ID</span></th>
-                    <th scope="col" ><span>Lat</span></th>
-                    <th scope="col" ><span>Lon</span></th>
-                    <th scope="col" ><span>Confirmed</span></th>
-                    <th scope="col" ><span>Active</span></th>
-                    <th scope="col" ><span>Deaths</span></th>
-                    <th scope="col" ><span>Recovered</span></th>
-                    <th scope="col" ><span>Date</span></th>
-                    <th scope="col" ><span>Country</span></th>
+                    <th scope="col" ><span>Name</span></th>
+                    <th scope="col" ><span>Discription</span></th>
+                    <th scope="col" ><span>Host</span></th>
+                    <th scope="col" ><span>Code</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let dailyCases of dailyCases ;trackBy: trackId">
-                    <td><a [routerLink]="['/daily-cases', dailyCases.id, 'view']">{{ dailyCases.id }}</a></td>
-                    <td>{{ dailyCases.lat }}</td>
-                    <td>{{ dailyCases.lon }}</td>
-                    <td>{{ dailyCases.confirmed }}</td>
-                    <td>{{ dailyCases.active }}</td>
-                    <td>{{ dailyCases.deaths }}</td>
-                    <td>{{ dailyCases.recovered }}</td>
-                    <td>{{ dailyCases.date | date:'medium' }}</td>
-                    <td>
-                        <div *ngIf="dailyCases.country">
-                            <a [routerLink]="['/country', dailyCases.country?.id, 'view']" >{{ dailyCases.country?.id }}</a>
-                        </div>
-                    </td>
+                <tr *ngFor="let globalConfigurations of globalConfigurations ;trackBy: trackId">
+                    <td><a [routerLink]="['/global-configurations', globalConfigurations.id, 'view']">{{ globalConfigurations.id }}</a></td>
+                    <td>{{ globalConfigurations.name }}</td>
+                    <td>{{ globalConfigurations.discription }}</td>
+                    <td>{{ globalConfigurations.host }}</td>
+                    <td>{{ globalConfigurations.code }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
-                                    [routerLink]="['/daily-cases', dailyCases.id, 'view']"
+                                    [routerLink]="['/global-configurations', globalConfigurations.id, 'view']"
                                     class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline">View</span>
                             </button>
 
                             <button type="submit"
-                                    [routerLink]="['/daily-cases', dailyCases.id, 'edit']"
+                                    [routerLink]="['/global-configurations', globalConfigurations.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(dailyCases)"
+                            <button type="submit" (click)="delete(globalConfigurations)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline">Delete</span>

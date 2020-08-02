@@ -1,32 +1,28 @@
 import { Moment } from 'moment';
-import { Status } from 'app/shared/model/enumerations/status.model';
+import { ICountry } from 'app/shared/model/country.model';
 
 export interface IDailyCases {
   id?: string;
-  country?: string;
-  countryCode?: string;
-  province?: string;
-  city?: string;
-  cityCode?: string;
   lat?: number;
   lon?: number;
-  cases?: number;
-  status?: Status;
+  confirmed?: number;
+  active?: number;
+  deaths?: number;
+  recovered?: number;
   date?: Moment;
+  country?: ICountry;
 }
 
 export class DailyCases implements IDailyCases {
   constructor(
     public id?: string,
-    public country?: string,
-    public countryCode?: string,
-    public province?: string,
-    public city?: string,
-    public cityCode?: string,
     public lat?: number,
     public lon?: number,
-    public cases?: number,
-    public status?: Status,
-    public date?: Moment
+    public confirmed?: number,
+    public active?: number,
+    public deaths?: number,
+    public recovered?: number,
+    public date?: Moment,
+    public country?: ICountry
   ) {}
 }

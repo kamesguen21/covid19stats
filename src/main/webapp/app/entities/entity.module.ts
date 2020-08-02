@@ -24,6 +24,11 @@ import { RouterModule } from '@angular/router';
         path: 'category',
         loadChildren: () => import('./category/category.module').then(m => m.Covid19StatsCategoryModule),
       },
+      {
+        path: 'global-configurations',
+        loadChildren: () =>
+          import('./global-configurations/global-configurations.module').then(m => m.Covid19StatsGlobalConfigurationsModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
