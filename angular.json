@@ -31,6 +31,7 @@
   },
   "defaultProject": "covid-19-stats",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "af0a2dd7-2452-49f4-b753-922210e05f2d"
   }
 }

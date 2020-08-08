@@ -31,7 +31,7 @@ public class Covid19apiServiceImpl extends ApiClient implements Covid19apiServic
     public DailyCasesResponseDTO[] getDailyCases(String countryCode) {
         log.info("requesting list of cases from day one for country {}", countryCode);
         return getMockDailyCases(countryCode);
-        //return restTemplate.getForObject(getCovidApiBaseUrl() + DAY_ONE_PATH + countryCode, DailyCasesResponseDTO[].class);
+//        return restTemplate.getForObject(getCovidApiBaseUrl() + DAY_ONE_PATH + countryCode, DailyCasesResponseDTO[].class);
     }
 
     public DailyCasesResponseDTO[] getMockDailyCases(String countryCode) {
@@ -46,7 +46,7 @@ public class Covid19apiServiceImpl extends ApiClient implements Covid19apiServic
             dailyCasesResponseDTOS = dailyCasesResponseDTOS.stream()
                 .filter(p -> p.getCountryCode().equals(countryCode)).collect(Collectors.toList());
             res = new DailyCasesResponseDTO[]{};
-            dailyCasesResponseDTOS.toArray(res); // TODO: this is not returning the array fix it
+            res = dailyCasesResponseDTOS.toArray(res); // TODO: this is not returning the array fix it
             return res;
         } catch (IOException e) {
             e.printStackTrace();

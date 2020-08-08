@@ -33,7 +33,7 @@ public class DataImportLauncher {
     @Autowired
     DailyCasesService dailyCasesService;
 
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedDelay = 300000)
     public void getDailyCases() {
         log.info("cron started at {}", Instant.now());
         List<Country> countries = countryService.findAll();
